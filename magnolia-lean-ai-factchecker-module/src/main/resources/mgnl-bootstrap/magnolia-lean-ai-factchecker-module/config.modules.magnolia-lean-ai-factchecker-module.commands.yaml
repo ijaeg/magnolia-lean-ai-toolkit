@@ -1,0 +1,6 @@
+'commands':
+  'jcr:primaryType': 'mgnl:content'
+  'default':
+    'jcr:primaryType': 'mgnl:content'
+    'factChecker':
+      'class': 'info.ijaeg.mgnl.ai.command.FactCheckerCommand'

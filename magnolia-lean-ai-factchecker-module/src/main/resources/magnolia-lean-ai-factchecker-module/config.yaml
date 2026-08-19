@@ -1,0 +1,9 @@
+factCheckerConfig:
+  claimExtractorChatModelConfg: !include:/magnolia-lean-ai-factchecker-module/includes/ollamaChatModelConfig.yaml
+    modelName: "qwen2.5:7b-instruct"
+    numCtx: 8192
+    temperature: 0.1
+  factCheckerChatModelConfg: !include:/magnolia-lean-ai-factchecker-module/includes/ollamaChatModelConfig.yaml
+    modelName: "llama3.1:8b-instruct-q4_K_M"
+    numCtx: 4096
+    temperature: 0.0

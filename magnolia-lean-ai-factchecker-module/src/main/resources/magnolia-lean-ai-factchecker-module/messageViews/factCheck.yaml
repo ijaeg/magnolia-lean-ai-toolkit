@@ -1,0 +1,29 @@
+actions:
+  deleteNotification:
+    implementationClass: info.magnolia.admincentral.apps.notifications.action.DeleteNotificationAndCloseAction
+    icon: icon-delete
+    class: info.magnolia.admincentral.apps.notifications.action.DeleteNotificationActionDefinition
+    label: FOOBAR
+actionbar:
+  defaultAction: delete
+  sections:
+    notifications:
+      groups:
+        actions:
+          items:
+            deleteNotification:
+              name: deleteNotification
+form:
+  tabs:
+    notification:
+      name: notification
+      fields:
+        sender:
+          class: info.magnolia.ui.form.field.definition.TextFieldDefinition
+        subject:
+          class: info.magnolia.ui.form.field.definition.TextFieldDefinition
+        message:
+          class: info.magnolia.ui.form.field.definition.TextFieldDefinition
+        description:
+          class: info.magnolia.ui.form.field.definition.RichTextFieldDefinition
+          rows: 5

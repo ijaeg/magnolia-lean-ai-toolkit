@@ -1,0 +1,22 @@
+baseUrl: https://en.wikipedia.org
+restCalls:
+  search:
+    method: GET
+    entityClass: com.fasterxml.jackson.databind.JsonNode
+    path: /w/rest.php/v1/search/page
+    headers:
+      User-Agent: "Mozilla5.0"
+    queryParameters:
+      limit: 3
+  summary:
+    method: GET
+    entityClass: com.fasterxml.jackson.databind.JsonNode
+    path: /api/rest_v1/page/summary/{key}
+    headers:
+      User-Agent: "Mozilla5.0"
+cacheConfiguration:
+  expireIn: 0
+timeoutConfiguration:
+  readTimeout: 10
+  fallbackToCache: false
+

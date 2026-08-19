@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module SYSTEM "module.dtd" >
+<module>
+  <name>magnolia-lean-ai-factchecker-module</name>
+  <displayName>Magnolia Lean AI Fact Checker Module</displayName>
+  <description>${project.description}</description>
+  <class>info.ijaeg.mgnl.ai.FactCheckerModule</class>
+  <versionHandler>info.ijaeg.mgnl.ai.setup.FactCheckerModuleVersionHandler</versionHandler>
+  <version>${project.version}</version>
+
+  <!-- For more information on module descriptor configuration options -->
+  <!-- https://documentation.magnolia-cms.com/display/DOCS/XML-based+module+descriptor -->
+  
+  <components>
+  <id>main</id>
+  <component>
+    <type>info.ijaeg.mgnl.ai.service.FactCheckerService</type>
+    <implementation>info.ijaeg.mgnl.ai.service.FactCheckerServiceImpl</implementation>
+    <scope>singleton</scope>
+  </component>
+  </components>
+
+  <dependencies>
+    <dependency>
+      <name>core</name>
+      <version>*</version>
+    </dependency>
+    <!--  Add other dependencies here, e.g the mte (magnolia templating essentials).
+    <dependency>
+      <name>mte</name>
+      <version>0.7/*</version>
+    </dependency>
+    -->
+  </dependencies>
+</module>
