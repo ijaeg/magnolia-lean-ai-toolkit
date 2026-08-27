@@ -2,13 +2,7 @@ subApps:
   browser:
     actions:
       factCheck:
-        icon: icon-preview-app
-        label: Fact Check
         $type: factCheckCommandAction
-        command: factChecker
-        asynchronous: true
-        alwaysShowSuccessMessage: false
-        notifyUser: false
     actionbar:
       sections:
         item:

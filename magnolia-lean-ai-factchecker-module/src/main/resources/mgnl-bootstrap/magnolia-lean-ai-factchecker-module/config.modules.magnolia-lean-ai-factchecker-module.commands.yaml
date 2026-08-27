@@ -4,3 +4,6 @@
     'jcr:primaryType': 'mgnl:content'
     'factChecker':
       'class': 'info.ijaeg.mgnl.ai.command.FactCheckerCommand'
+      'nodePropertyNames':
+        '0': 'body'
+        '1': 'text'

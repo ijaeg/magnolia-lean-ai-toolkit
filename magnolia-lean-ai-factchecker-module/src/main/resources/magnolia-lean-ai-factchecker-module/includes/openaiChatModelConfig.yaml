@@ -1,0 +1,5 @@
+providerType: OPEN_AI
+apiKey: "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"
+modelName: "gpt-5.6-terra"
+logRequests: true
+logResponses: true

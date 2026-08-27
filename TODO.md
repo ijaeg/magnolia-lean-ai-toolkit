@@ -1,9 +1,3 @@
-- Konfigurierbarkeit verbessern (System Prompts!)
-- i18n / message bundles
-- Mehrsprachigkeit (de.wikipedia.org)
-- Output Formatierung (Konstanten + MessageFormat)
-- POMs konsolidieren
-- Logging
-- Unit Tests
-- Doku + Kommentare
-- Naming
+- Improve Logging
+- Add Unit Tests
+- Add Documentation and Comments

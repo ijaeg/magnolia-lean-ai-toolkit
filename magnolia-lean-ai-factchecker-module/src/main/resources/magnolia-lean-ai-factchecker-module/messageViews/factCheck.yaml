@@ -3,7 +3,7 @@ actions:
     implementationClass: info.magnolia.admincentral.apps.notifications.action.DeleteNotificationAndCloseAction
     icon: icon-delete
     class: info.magnolia.admincentral.apps.notifications.action.DeleteNotificationActionDefinition
-    label: FOOBAR
+#    label: FOOBAR
 actionbar:
   defaultAction: delete
   sections:

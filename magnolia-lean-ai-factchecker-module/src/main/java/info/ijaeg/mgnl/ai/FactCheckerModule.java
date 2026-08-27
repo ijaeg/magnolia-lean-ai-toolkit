@@ -1,7 +1,11 @@
 package info.ijaeg.mgnl.ai;
 
+import dev.langchain4j.model.ModelProvider;
+import dev.langchain4j.model.chat.Capability;
 import info.magnolia.module.ModuleLifecycle;
 import lombok.Data;
+
+import java.util.List;
 
 /**
  * This class is optional and represents the configuration for the lean-ai-assistant-module module.
@@ -13,21 +17,24 @@ import lombok.Data;
 @Data
 public class FactCheckerModule implements ModuleLifecycle {
     /* you can optionally implement info.magnolia.module.ModuleLifecycle */
-    private FactCheckerConfig factCheckerConfig = new FactCheckerConfig();
+
+
+    private ChatModelConfig claimExtractorChatModelConfg = new ChatModelConfig();
+    private ChatModelConfig factCheckerChatModelConfg = new ChatModelConfig();
+    private String claimExtractorSystemMessage;
+    private String factCheckerSystemMessage;
 
     @Data
-    public static class FactCheckerConfig {
-        private OllamaChatModelConfig claimExtractorChatModelConfg = new OllamaChatModelConfig();
-        private OllamaChatModelConfig factCheckerChatModelConfg = new OllamaChatModelConfig();
-    }
-
-    @Data
-    public static class OllamaChatModelConfig {
+    public static class ChatModelConfig {
+        private ModelProvider providerType;
         private String baseUrl;
+        private String apiKey;
         private String modelName;
         private int numCtx;
+        private int numPredict;
         private double temperature;
         private boolean logRequests;
         private boolean logResponses;
+        private Capability[] supportedCapabilities = new Capability[]{};
     }
 }

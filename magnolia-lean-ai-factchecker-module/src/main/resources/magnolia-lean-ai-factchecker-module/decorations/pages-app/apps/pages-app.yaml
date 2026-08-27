@@ -1,0 +1,34 @@
+subApps:
+  browser:
+    actions:
+      factCheck:
+        $type: factCheckCommandAction
+        params:
+          includeSubnodes: true
+          checkAllLanguages: true
+    actionbar:
+      sections:
+        crud:
+          groups:
+            edit:
+              items:
+                - name: factCheck
+  detail:
+    actions:
+      factCheck:
+        $type: factCheckCommandAction
+        params:
+          includeSubnodes: true
+          checkAllLanguages: true
+    actionbar:
+      sections:
+        pageActions:
+          groups:
+            edit:
+              items:
+                - name: factCheck
+        componentActions:
+          groups:
+            edit:
+              items:
+                - name: factCheck

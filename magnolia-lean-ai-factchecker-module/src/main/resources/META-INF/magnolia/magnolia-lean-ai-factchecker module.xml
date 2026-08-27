@@ -18,6 +18,11 @@
     <implementation>info.ijaeg.mgnl.ai.service.FactCheckerServiceImpl</implementation>
     <scope>singleton</scope>
   </component>
+    <component>
+      <type>info.ijaeg.mgnl.ai.factory.ChatModelFactory</type>
+      <implementation>info.ijaeg.mgnl.ai.factory.ChatModelFactory</implementation>
+      <scope>singleton</scope>
+    </component>
   </components>
 
   <dependencies>

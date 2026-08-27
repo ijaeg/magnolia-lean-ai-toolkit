@@ -1,6 +1,5 @@
+providerType: OLLAMA
 baseUrl: "http://localhost:11434"
-modelName: "llama3.1:8b-instruct-q3_K_L"
-numCtx: 8192
-temperature: 0.3
+numPredict: 1024
 logRequests: true
 logResponses: true
