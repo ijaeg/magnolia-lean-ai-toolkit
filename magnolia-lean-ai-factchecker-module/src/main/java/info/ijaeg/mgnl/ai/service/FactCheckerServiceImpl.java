@@ -53,7 +53,10 @@ public class FactCheckerServiceImpl implements FactCheckerService {
                 .chatModel(chatModelFactory.createChatModel(getModule().getClaimExtractorChatModelConfg()))
                 .build();
         String parsedText = Jsoup.parse(text).text();
-        ClaimExtractor.ClaimList claimList = extractor.extract(parsedText, language);
+        return toClaims(extractor.extract(parsedText, language));
+    }
+
+    static List<String> toClaims(ClaimExtractor.ClaimList claimList) {
         return (claimList != null && claimList.claims() != null) ? claimList.claims() : List.of();
     }
 

@@ -42,7 +42,7 @@ public class FactCheckCommandAction extends JcrCommandAction<Node, FactCheckComm
         Message msg = new Message();
         msg.setSubject(getDefinition().getMessageSubject());
         msg.setMessage(getMessage(node));
-        msg.addProperty(MSG_PROP_DESCRIPTION, getDescription(results));
+        msg.addProperty(MSG_PROP_DESCRIPTION, getDescription(getDefinition(), results));
         msg.setType(getMessageType(results));
         msg.setView(getDefinition().getMessageView());
         messagesManager.sendLocalMessage(msg);
@@ -53,18 +53,18 @@ public class FactCheckCommandAction extends JcrCommandAction<Node, FactCheckComm
         return MessageFormat.format(getDefinition().getMessagePattern(), node.getSession().getWorkspace().getName(), node.getPath());
     }
 
-    private String getDescription(List<FactChecker.ClaimCheckResult> results) {
+    static String getDescription(FactCheckCommandActionDefinition definition, List<FactChecker.ClaimCheckResult> results) {
         if (CollectionUtils.isEmpty(results)) {
-            return getDefinition().getMessageDescriptionNoClaims();
+            return definition.getMessageDescriptionNoClaims();
         }
         StringBuilder sb = new StringBuilder();
         results.forEach(result -> {
-           sb.append(MessageFormat.format(getDefinition().getMessageDescriptionPattern(), result.claim(), result.verdict(), result.explanation(), getSourceUrlLink(result.sourceUrl())));
+           sb.append(MessageFormat.format(definition.getMessageDescriptionPattern(), result.claim(), result.verdict(), result.explanation(), getSourceUrlLink(result.sourceUrl())));
         });
         return sb.toString();
     }
 
-    private MessageType getMessageType(List<FactChecker.ClaimCheckResult> results) {
+    static MessageType getMessageType(List<FactChecker.ClaimCheckResult> results) {
         if (results.stream().anyMatch(result -> result.verdict() == FactChecker.FactCheckResult.Verdict.INCORRECT)) {
             return MessageType.WARNING;
         } else {
@@ -72,7 +72,7 @@ public class FactCheckCommandAction extends JcrCommandAction<Node, FactCheckComm
         }
     }
 
-    private String getSourceUrlLink(String soureUrl) {
+    static String getSourceUrlLink(String soureUrl) {
         return StringUtils.isEmpty(soureUrl) ? StringUtils.EMPTY : MessageFormat.format("<a href=\"{0}\">{0}</a>", soureUrl);
     }
 }
