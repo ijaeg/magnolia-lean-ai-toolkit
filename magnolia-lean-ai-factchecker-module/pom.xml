@@ -68,6 +68,11 @@
       <artifactId>magnolia-ui-framework-jcr</artifactId>
     </dependency>
 
+    <dependency>
+      <groupId>info.magnolia.passwordmanager</groupId>
+      <artifactId>magnolia-password-manager-core</artifactId>
+    </dependency>
+
     <!-- TEST -->
     <dependency>
       <groupId>junit</groupId>
