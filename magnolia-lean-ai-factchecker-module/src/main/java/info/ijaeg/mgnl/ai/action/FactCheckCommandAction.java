@@ -17,6 +17,7 @@ import jakarta.inject.Inject;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.text.StringEscapeUtils;
 
 import javax.jcr.Node;
 import javax.jcr.RepositoryException;
@@ -59,7 +60,7 @@ public class FactCheckCommandAction extends JcrCommandAction<Node, FactCheckComm
         }
         StringBuilder sb = new StringBuilder();
         results.forEach(result -> {
-           sb.append(MessageFormat.format(definition.getMessageDescriptionPattern(), result.claim(), result.verdict(), result.explanation(), getSourceUrlLink(result.sourceUrl())));
+           sb.append(MessageFormat.format(definition.getMessageDescriptionPattern(), result.claim(), result.verdict(), StringEscapeUtils.escapeHtml4(result.explanation()), getSourceUrlLink(result.sourceUrl())));
         });
         return sb.toString();
     }
