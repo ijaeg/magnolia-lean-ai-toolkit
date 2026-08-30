@@ -6,7 +6,9 @@ import info.magnolia.rest.client.RestClient;
 import info.magnolia.rest.client.RestClientDefinition;
 import info.magnolia.rest.client.factory.RestClientFactory;
 import info.magnolia.rest.client.registry.RestClientRegistry;
+import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import org.apache.http.HttpStatus;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
@@ -52,6 +54,8 @@ public class WikipediaToolTest {
     // raising UnfinishedStubbingException). Always assign it to a local variable first.
     private Response jsonResponse(String json) {
         Response response = mock(Response.class);
+        when(response.getStatus()).thenReturn(HttpStatus.SC_OK);
+        when(response.getMediaType()).thenReturn(MediaType.APPLICATION_JSON_TYPE);
         when(response.getEntity()).thenReturn(json);
         return response;
     }
