@@ -50,7 +50,7 @@ public class FactCheckerServiceImpl implements FactCheckerService {
                 try {
                     result = factChecker.check(claim, language);
                 } catch (OutputParsingException e1) {
-                    log.warn(e.getMessage());
+                    log.warn(e1.getMessage());
                 }
             }
             if (result != null) {
