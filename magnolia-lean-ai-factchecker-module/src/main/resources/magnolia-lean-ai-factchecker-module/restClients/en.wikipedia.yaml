@@ -4,16 +4,14 @@ restCalls:
     method: GET
     entityClass: com.fasterxml.jackson.databind.JsonNode
     path: /w/rest.php/v1/search/page
-    headers:
-      User-Agent: "Mozilla5.0"
+    headers: !include:/magnolia-lean-ai-factchecker-module/includes/userAgentHeader.yaml
     queryParameters:
       limit: 3
   summary:
     method: GET
     entityClass: com.fasterxml.jackson.databind.JsonNode
     path: /api/rest_v1/page/summary/{key}
-    headers:
-      User-Agent: "Mozilla5.0"
+    headers: !include:/magnolia-lean-ai-factchecker-module/includes/userAgentHeader.yaml
 cacheConfiguration:
   expireIn: 0
 timeoutConfiguration:
