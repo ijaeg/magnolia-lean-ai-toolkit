@@ -10,9 +10,11 @@ import info.magnolia.rest.client.RestClient;
 import info.magnolia.rest.client.RestClientDefinition;
 import info.magnolia.rest.client.factory.RestClientFactory;
 import info.magnolia.rest.client.registry.RestClientRegistry;
+import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.http.HttpStatus;
 import org.jsoup.Jsoup;
 
 import java.net.URLEncoder;
@@ -80,6 +82,7 @@ public class WikipediaTool {
         String jsonString = null;
         try {
             Response response = getRestClient(language).invoke("search", Map.of("q", URLEncoder.encode(query, StandardCharsets.UTF_8).replaceAll("\\+", "%20")));
+            verifyResponse(response);
             jsonString = response.getEntity().toString();
             JsonNode jsonNode = objectMapper.readTree(jsonString);
             Iterator<JsonNode> iterator = jsonNode.get("pages").elements();
@@ -136,6 +139,7 @@ public class WikipediaTool {
         String jsonString = null;
         try {
             Response response = getRestClient(language).invoke("summary", Map.of("key", key));
+            verifyResponse(response);
             jsonString = response.getEntity().toString();
             JsonNode jsonNode = objectMapper.readTree(jsonString);
             return jsonNode.get("extract").textValue();
@@ -154,6 +158,12 @@ public class WikipediaTool {
         } catch (Registry.NoSuchDefinitionException e) {
             log.error(e.getMessage(), e);
             return restClientFactory.createClient(restClientRegistry.getProvider(DEFAULT_REST_CLIENT_NAME).get());
+        }
+    }
+
+    private void verifyResponse(Response response) {
+        if (response.getStatus() != HttpStatus.SC_OK || !response.getMediaType().isCompatible(MediaType.APPLICATION_JSON_TYPE)) {
+            throw new IllegalStateException(MessageFormat.format("Unexpected response - status code: {0}, content type: {1}", response.getStatus(), response.getMediaType()));
         }
     }
 
