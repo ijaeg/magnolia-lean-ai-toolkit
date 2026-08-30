@@ -20,6 +20,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyMap;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
@@ -157,6 +158,20 @@ public class WikipediaToolTest {
         ArgumentCaptor<Map<String, Object>> captor = ArgumentCaptor.forClass(Map.class);
         verify(restClient).invoke(eq("search"), captor.capture());
         assertEquals("Ho%20Chi%20Minh%20City", captor.getValue().get("q"));
+    }
+
+    @Test
+    public void wikipediaLookup_forbiddenNonJsonResponse_returnsNotFoundWithoutParsingBody() {
+        Response forbiddenResponse = mock(Response.class);
+        when(forbiddenResponse.getStatus()).thenReturn(HttpStatus.SC_FORBIDDEN);
+        when(forbiddenResponse.getMediaType()).thenReturn(MediaType.TEXT_PLAIN_TYPE);
+        when(restClient.invoke(eq("search"), anyMap())).thenReturn(forbiddenResponse);
+
+        WikipediaTool.WikipediaResult result = tool.wikipediaLookup("Ho Chi Minh City", "", "en");
+
+        assertEquals(WikipediaTool.WikipediaResult.Status.NOT_FOUND, result.status());
+        // verifyResponse() must reject the response before the body is ever read as JSON
+        verify(forbiddenResponse, never()).getEntity();
     }
 
     @Test
