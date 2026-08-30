@@ -12,12 +12,14 @@ import info.ijaeg.mgnl.ai.FactCheckerModule;
 import info.magnolia.module.ModuleRegistry;
 import info.magnolia.rest.client.factory.RestClientFactory;
 import info.magnolia.rest.client.registry.RestClientRegistry;
+import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Singleton
+@Slf4j
 public class FactCheckerServiceImpl implements FactCheckerService {
     private final ModuleRegistry moduleRegistry;
     private final RestClientRegistry restClientRegistry;
@@ -41,13 +43,19 @@ public class FactCheckerServiceImpl implements FactCheckerService {
                 .build();
         List<String> claims = extractClaims(text, language);
         claims.forEach(claim -> {
-            FactChecker.FactCheckResult result;
+            FactChecker.FactCheckResult result = null;
             try {
                 result = factChecker.check(claim, language);
             } catch (OutputParsingException e) {
-                result = factChecker.check(claim, language);
+                try {
+                    result = factChecker.check(claim, language);
+                } catch (OutputParsingException e1) {
+                    log.warn(e.getMessage());
+                }
             }
-            claimCheckResultList.add(new FactChecker.ClaimCheckResult(claim, result.verdict(), result.explanation(), result.sourceUrl()));
+            if (result != null) {
+                claimCheckResultList.add(new FactChecker.ClaimCheckResult(claim, result.verdict(), result.explanation(), result.sourceUrl()));
+            }
         });
         return claimCheckResultList;
     }
