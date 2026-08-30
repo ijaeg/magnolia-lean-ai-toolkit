@@ -2,6 +2,7 @@ package info.ijaeg.mgnl.ai.service;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import dev.langchain4j.service.output.OutputParsingException;
 import info.ijaeg.mgnl.ai.agent.ClaimExtractor;
 import info.ijaeg.mgnl.ai.agent.FactChecker;
 import info.ijaeg.mgnl.ai.factory.ChatModelFactory;
@@ -41,7 +42,12 @@ public class FactCheckerServiceImpl implements FactCheckerService {
                 .build();
         List<String> claims = extractClaims(text, language);
         claims.forEach(claim -> {
-            FactChecker.FactCheckResult result = factChecker.check(claim, language);
+            FactChecker.FactCheckResult result;
+            try {
+                result = factChecker.check(claim, language);
+            } catch (OutputParsingException e) {
+                result = factChecker.check(claim, language);
+            }
             claimCheckResultList.add(new FactChecker.ClaimCheckResult(claim, result.verdict(), result.explanation(), result.sourceUrl()));
         });
         return claimCheckResultList;
