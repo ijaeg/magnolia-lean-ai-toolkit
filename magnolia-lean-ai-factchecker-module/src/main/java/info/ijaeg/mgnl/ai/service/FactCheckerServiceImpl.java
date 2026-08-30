@@ -36,7 +36,6 @@ public class FactCheckerServiceImpl implements FactCheckerService {
     public List<FactChecker.ClaimCheckResult> check(String text, String language) {
         List<FactChecker.ClaimCheckResult> claimCheckResultList = new ArrayList<>();
         FactChecker factChecker = AiServices.builder(FactChecker.class)
-                .systemMessage(getModule().getFactCheckerSystemMessage())
                 .chatModel(chatModelFactory.createChatModel(getModule().getFactCheckerChatModelConfg()))
                 .tools(new WikipediaTool(restClientRegistry, restClientFactory))
                 .build();
@@ -55,7 +54,6 @@ public class FactCheckerServiceImpl implements FactCheckerService {
 
     private List<String> extractClaims(String text, String language) {
         ClaimExtractor extractor = AiServices.builder(ClaimExtractor.class)
-                .systemMessage(getModule().getClaimExtractorSystemMessage())
                 .chatModel(chatModelFactory.createChatModel(getModule().getClaimExtractorChatModelConfg()))
                 .build();
         String parsedText = Jsoup.parse(text).text();

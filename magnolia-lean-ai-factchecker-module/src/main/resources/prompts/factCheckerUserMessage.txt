@@ -1,0 +1,12 @@
+Claim to verify: {{claim}}
+
+Respond with a single JSON object, with the fields in exactly this order:
+{
+  "explanation": "<write your reasoning here, IN {{language}} — this
+    is the language of the claim above, regardless of what language the
+    system prompt, tool descriptions, or Wikipedia results are in>",
+  "verdict": "<CORRECT, INCORRECT, or UNVERIFIABLE — must follow logically
+    from the explanation you just wrote, never decided beforehand>",
+  "sourceUrl": "<the Wikipedia URL you used, or an empty string>"
+}
+No text before or after the JSON object.

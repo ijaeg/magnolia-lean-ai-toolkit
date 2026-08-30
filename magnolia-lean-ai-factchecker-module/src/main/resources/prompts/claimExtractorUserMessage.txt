@@ -1,0 +1,3 @@
+Language of the text: {{language}}
+Text:
+{{text}}

@@ -21,8 +21,6 @@ public class FactCheckerModule implements ModuleLifecycle {
 
     private ChatModelConfig claimExtractorChatModelConfg = new ChatModelConfig();
     private ChatModelConfig factCheckerChatModelConfg = new ChatModelConfig();
-    private String claimExtractorSystemMessage;
-    private String factCheckerSystemMessage;
 
     @Data
     public static class ChatModelConfig {
