@@ -55,6 +55,7 @@ public class ChatModelFactory {
             .baseUrl(config.getBaseUrl())
             .apiKey(getApiKeyFromKeyStore(config.getApiKey()))
             .modelName(config.getModelName())
+            .temperature(config.getTemperature())
             .logRequests(config.isLogRequests())
             .logResponses(config.isLogResponses())
             .supportedCapabilities(config.getSupportedCapabilities())
