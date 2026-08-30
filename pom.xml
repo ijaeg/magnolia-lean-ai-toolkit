@@ -6,6 +6,7 @@
   <version>1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <magnoliaBundleVersion>6.4.9</magnoliaBundleVersion>
     <javaVersion>21</javaVersion>
     <lombokVersion>1.18.46</lombokVersion>
