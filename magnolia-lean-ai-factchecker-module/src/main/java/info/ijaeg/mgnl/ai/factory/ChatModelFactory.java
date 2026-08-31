@@ -13,7 +13,6 @@ import jakarta.inject.Inject;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.jcr.Node;
-import javax.jcr.RepositoryException;
 
 @Singleton
 @Slf4j

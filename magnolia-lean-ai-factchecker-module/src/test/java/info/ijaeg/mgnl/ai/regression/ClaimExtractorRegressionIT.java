@@ -43,7 +43,7 @@ public class ClaimExtractorRegressionIT extends AbstractRegressionIT {
         FactCheckerModule.ChatModelConfig config = new FactCheckerModule.ChatModelConfig();
         config.setProviderType(ModelProvider.OLLAMA);
         config.setBaseUrl("http://localhost:11434");
-        config.setModelName("qwen2.5:7b-instruct");
+        config.setModelName("qwen3:14b");
         config.setNumCtx(8192);
         config.setNumPredict(1024);
         config.setTemperature(0.1);
