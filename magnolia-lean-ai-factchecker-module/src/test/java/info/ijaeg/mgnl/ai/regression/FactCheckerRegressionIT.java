@@ -43,6 +43,7 @@ public class FactCheckerRegressionIT extends AbstractRegressionIT {
         config.setTemperature(0.0);
         config.setLogRequests(true);
         config.setLogResponses(true);
+        config.setTimeoutInSeconds(150);
 
         return chatModelFactory.createChatModel(config);
     }

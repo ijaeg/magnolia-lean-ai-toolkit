@@ -3,3 +3,4 @@ baseUrl: "http://localhost:11434"
 numPredict: 1024
 logRequests: true
 logResponses: true
+timeoutInSeconds: 150

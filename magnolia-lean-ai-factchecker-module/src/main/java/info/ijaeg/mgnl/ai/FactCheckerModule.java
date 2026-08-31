@@ -34,5 +34,6 @@ public class FactCheckerModule implements ModuleLifecycle {
         private boolean logRequests;
         private boolean logResponses;
         private Capability[] supportedCapabilities = new Capability[]{};
+        private long timeoutInSeconds;
     }
 }

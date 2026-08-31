@@ -40,6 +40,7 @@ public class ChatModelFactoryTest {
         config.setProviderType(ModelProvider.OLLAMA);
         config.setBaseUrl("http://localhost:11434");
         config.setModelName("llama3.1:8b-instruct-q4_K_M");
+        config.setTimeoutInSeconds(150);
 
         ChatModel model = factory.createChatModel(config);
 
@@ -52,6 +53,7 @@ public class ChatModelFactoryTest {
         config.setProviderType(ModelProvider.OPEN_AI);
         config.setApiKey("test-key");
         config.setModelName("gpt-4o-mini");
+        config.setTimeoutInSeconds(150);
 
         ChatModel model;
         try (MockedStatic<SessionUtil> sessionUtil = mockStatic(SessionUtil.class)) {

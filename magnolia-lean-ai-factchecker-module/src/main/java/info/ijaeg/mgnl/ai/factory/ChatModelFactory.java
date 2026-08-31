@@ -13,6 +13,7 @@ import jakarta.inject.Inject;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.jcr.Node;
+import java.time.Duration;
 
 @Singleton
 @Slf4j
@@ -46,6 +47,7 @@ public class ChatModelFactory {
             .logRequests(config.isLogRequests())
             .logResponses(config.isLogResponses())
             .supportedCapabilities(config.getSupportedCapabilities())
+            .timeout(Duration.ofSeconds(config.getTimeoutInSeconds()))
             .build();
     }
 
@@ -59,6 +61,7 @@ public class ChatModelFactory {
             .logResponses(config.isLogResponses())
             .supportedCapabilities(config.getSupportedCapabilities())
             .reasoningEffort("none")
+            .timeout(Duration.ofSeconds(config.getTimeoutInSeconds()))
             .build();
     }
 

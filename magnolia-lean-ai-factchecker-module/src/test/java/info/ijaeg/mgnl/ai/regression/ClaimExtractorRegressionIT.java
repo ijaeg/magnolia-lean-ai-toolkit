@@ -50,6 +50,7 @@ public class ClaimExtractorRegressionIT extends AbstractRegressionIT {
         config.setLogRequests(true);
         config.setLogResponses(true);
         config.setSupportedCapabilities(new Capability[]{Capability.RESPONSE_FORMAT_JSON_SCHEMA});
+        config.setTimeoutInSeconds(150);
 
         return chatModelFactory.createChatModel(config);
     }

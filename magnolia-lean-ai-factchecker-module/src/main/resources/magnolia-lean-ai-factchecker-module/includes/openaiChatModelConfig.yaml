@@ -4,3 +4,4 @@ apiKey: "/magnolia-lean-ai-toolkit/openai_api_key"
 modelName: "gpt-5.6-terra"
 logRequests: true
 logResponses: true
+timeoutInSeconds: 150
