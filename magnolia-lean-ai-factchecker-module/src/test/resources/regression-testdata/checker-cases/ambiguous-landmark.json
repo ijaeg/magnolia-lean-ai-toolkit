@@ -7,7 +7,7 @@
       "status": "AMBIGUOUS",
       "title": null,
       "extract": null,
-      "url": null
+      "sourceUrl": null
     }
   },
   "expectedVerdict": "UNVERIFIABLE"

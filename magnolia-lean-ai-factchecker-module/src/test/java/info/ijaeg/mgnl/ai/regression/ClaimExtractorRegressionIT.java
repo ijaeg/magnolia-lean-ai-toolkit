@@ -8,30 +8,30 @@ import info.ijaeg.mgnl.ai.FactCheckerModule;
 import info.ijaeg.mgnl.ai.agent.ClaimExtractor;
 import info.ijaeg.mgnl.ai.factory.ChatModelFactory;
 import info.magnolia.keystore.registry.PasswordRegistry;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 
 // Nur ClaimExtractorRegressionIT kennt ExtractorCase - CheckerCase taucht
 // hier nirgends auf.
-class ClaimExtractorRegressionIT extends AbstractRegressionIT {
+public class ClaimExtractorRegressionIT extends AbstractRegressionIT {
 
     private static ClaimExtractor claimExtractor;
 
-    @BeforeAll
-    static void setUp() {
+    @BeforeClass
+    public static void setUpClass() {
         // buildExtractorChatModel(): echtes Ollama-Modell mit Produktions-Config
         // (numCtx=8192, siehe CLAUDE.md) - Aufbau hier aus Übersichtlichkeit ausgelassen.
         claimExtractor = AiServices.create(ClaimExtractor.class, buildExtractorChatModel());
     }
 
     @Test
-    void claimExtractor_regressionSuite() {
+    public void claimExtractor_regressionSuite() {
         List<ExtractorCase> cases = RegressionCaseLoader.loadExtractorCases(
                 "/regression-testdata/extractor-cases");
         runAllAndAssert(cases, this::checkSingleCase, ExtractorCase::name);
@@ -59,12 +59,12 @@ class ClaimExtractorRegressionIT extends AbstractRegressionIT {
         String joined = String.join(" | ", claims);
 
         for (String mustContain : testCase.mustContainSubstrings()) {
-            assertTrue(joined.contains(mustContain),
-                    testCase.name() + ": erwarteter Substring fehlt: \"" + mustContain + "\"");
+            assertTrue(testCase.name() + ": erwarteter Substring fehlt: \"" + mustContain + "\"",
+                    joined.contains(mustContain));
         }
         for (String mustNotContain : testCase.mustNotContainSubstrings()) {
-            assertFalse(joined.contains(mustNotContain),
-                    testCase.name() + ": unerwarteter Substring vorhanden: \"" + mustNotContain + "\"");
+            assertFalse(testCase.name() + ": unerwarteter Substring vorhanden: \"" + mustNotContain + "\"",
+                    joined.contains(mustNotContain));
         }
     }
 }

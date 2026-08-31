@@ -7,7 +7,7 @@
       "status": "FOUND",
       "title": "Lantern Temple",
       "extract": "The Lantern Temple is a Buddhist temple complex located near the Tembaya River in southern Velmora.",
-      "url": "https://en.wikipedia.org/wiki/Lantern_Temple"
+      "sourceUrl": "https://en.wikipedia.org/wiki/Lantern_Temple"
     }
   },
   "expectedVerdict": "CORRECT"

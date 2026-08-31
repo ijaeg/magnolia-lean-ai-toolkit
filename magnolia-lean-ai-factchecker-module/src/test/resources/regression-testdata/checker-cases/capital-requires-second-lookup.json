@@ -7,13 +7,13 @@
       "status": "FOUND",
       "title": "Dorenne",
       "extract": "Dorenne is the largest city and main commercial port of Velmora, located at the mouth of the Tembaya River delta.",
-      "url": "https://en.wikipedia.org/wiki/Dorenne"
+      "sourceUrl": "https://en.wikipedia.org/wiki/Dorenne"
     },
     "Velmora": {
       "status": "FOUND",
       "title": "Velmora",
       "extract": "Velmora is a country in Southeast Asia; its capital and seat of government is Rivelle.",
-      "url": "https://en.wikipedia.org/wiki/Velmora"
+      "sourceUrl": "https://en.wikipedia.org/wiki/Velmora"
     }
   },
   "expectedVerdict": "INCORRECT"

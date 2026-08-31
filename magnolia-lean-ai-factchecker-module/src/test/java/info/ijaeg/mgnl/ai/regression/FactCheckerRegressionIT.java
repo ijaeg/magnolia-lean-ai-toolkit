@@ -7,7 +7,7 @@ import info.ijaeg.mgnl.ai.FactCheckerModule;
 import info.ijaeg.mgnl.ai.agent.FactChecker;
 import info.ijaeg.mgnl.ai.factory.ChatModelFactory;
 import info.magnolia.keystore.registry.PasswordRegistry;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import java.util.List;
 
@@ -50,7 +50,7 @@ public class FactCheckerRegressionIT extends AbstractRegressionIT {
     @Test
     public void factChecker_regressionSuite() {
         List<CheckerCase> cases = RegressionCaseLoader.loadCheckerCases(
-                "/info/ijaeg/mgnl/ai/regression/checker-cases");
+                "/regression-testdata/checker-cases");
         runAllAndAssert(cases, this::checkSingleCase, CheckerCase::name);
     }
 
