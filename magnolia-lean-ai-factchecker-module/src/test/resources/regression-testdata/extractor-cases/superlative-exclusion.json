@@ -1,0 +1,7 @@
+{
+  "name": "superlative-exclusion",
+  "text": "Velmora is widely regarded as one of the world's most exotic and unforgettable travel destinations, blending ancient temples with vibrant street life.",
+  "languageCode": "en",
+  "mustContainSubstrings": [],
+  "mustNotContainSubstrings": ["one of the world's most exotic"]
+}

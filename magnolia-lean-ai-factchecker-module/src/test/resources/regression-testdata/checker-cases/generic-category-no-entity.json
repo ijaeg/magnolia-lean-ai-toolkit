@@ -1,0 +1,7 @@
+{
+  "name": "generic-category-no-entity",
+  "claim": "Northlight Journeys is an independent, family-run travel agency.",
+  "languageCode": "en",
+  "wikipediaFixtures": {},
+  "expectedVerdict": "UNVERIFIABLE"
+}

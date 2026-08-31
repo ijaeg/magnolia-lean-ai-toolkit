@@ -1,0 +1,7 @@
+{
+  "name": "agency-self-description-no-entity",
+  "text": "Northlight Journeys is an independent, family-run travel agency dedicated to crafting personalized, unforgettable adventures for every kind of traveler.",
+  "languageCode": "en",
+  "mustContainSubstrings": [],
+  "mustNotContainSubstrings": ["Northlight Journeys is an independent"]
+}

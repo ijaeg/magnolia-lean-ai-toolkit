@@ -1,0 +1,7 @@
+{
+  "name": "capital-carries-country",
+  "text": "Velmora stretches from the misty highlands in the north to the fertile river delta in the south. Dorenne is the capital, a bustling port city known for its rooftop bars and colonial architecture.",
+  "languageCode": "en",
+  "mustContainSubstrings": ["Dorenne is the capital of Velmora"],
+  "mustNotContainSubstrings": []
+}

@@ -1,0 +1,14 @@
+{
+  "name": "false-title-checked-against-real-occupation",
+  "claim": "Jonas Vetter is the Federal President of Kordinia.",
+  "languageCode": "de",
+  "wikipediaFixtures": {
+    "Jonas Vetter": {
+      "status": "FOUND",
+      "title": "Jonas Vetter",
+      "extract": "Jonas Vetter is a Kordinian comedian, actor, and television host known for his satirical stage shows since the 1990s.",
+      "url": "https://de.wikipedia.org/wiki/Jonas_Vetter"
+    }
+  },
+  "expectedVerdict": "INCORRECT"
+}

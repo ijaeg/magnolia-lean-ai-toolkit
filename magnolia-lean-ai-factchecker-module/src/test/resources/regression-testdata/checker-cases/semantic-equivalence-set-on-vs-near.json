@@ -1,0 +1,14 @@
+{
+  "name": "semantic-equivalence-set-on-vs-near",
+  "claim": "The Lantern Temple is set on the banks of the Tembaya River.",
+  "languageCode": "en",
+  "wikipediaFixtures": {
+    "Lantern Temple": {
+      "status": "FOUND",
+      "title": "Lantern Temple",
+      "extract": "The Lantern Temple is a Buddhist temple complex located near the Tembaya River in southern Velmora.",
+      "url": "https://en.wikipedia.org/wiki/Lantern_Temple"
+    }
+  },
+  "expectedVerdict": "CORRECT"
+}

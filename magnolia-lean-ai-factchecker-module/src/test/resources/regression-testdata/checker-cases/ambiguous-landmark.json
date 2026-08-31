@@ -1,0 +1,14 @@
+{
+  "name": "ambiguous-landmark",
+  "claim": "The Sunstone Palace was built in the 14th century.",
+  "languageCode": "en",
+  "wikipediaFixtures": {
+    "Sunstone Palace": {
+      "status": "AMBIGUOUS",
+      "title": null,
+      "extract": null,
+      "url": null
+    }
+  },
+  "expectedVerdict": "UNVERIFIABLE"
+}

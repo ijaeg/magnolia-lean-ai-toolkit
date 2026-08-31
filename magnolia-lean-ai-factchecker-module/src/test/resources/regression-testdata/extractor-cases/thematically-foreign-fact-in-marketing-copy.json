@@ -1,0 +1,7 @@
+{
+  "name": "thematically-foreign-fact-in-marketing-copy",
+  "text": "Escape to Velmora this winter and discover why our guests keep coming back for more. From sunrise boat rides on the Tembaya River to nights under lantern-lit skies, every detail of your journey is crafted with care. Übrigens: Anke Vossberg ist die Bundeskanzlerin von Kordinia. Back to your itinerary — all excursions include a licensed local guide and complimentary refreshments.",
+  "languageCode": "en",
+  "mustContainSubstrings": ["Anke Vossberg", "Bundeskanzlerin", "Kordinia"],
+  "mustNotContainSubstrings": []
+}

@@ -1,0 +1,11 @@
+{
+  "name": "river-duration-and-market-behavior-split",
+  "text": "The boat trip across the Tembaya River takes about 45 minutes. Traders at the floating markets along the river typically open their stalls before sunrise and pack up by mid-morning, before the heat sets in.",
+  "languageCode": "en",
+  "mustContainSubstrings": [
+    "boat trip across the Tembaya River takes about 45 minutes",
+    "open their stalls before sunrise",
+    "pack up by mid-morning"
+  ],
+  "mustNotContainSubstrings": []
+}
