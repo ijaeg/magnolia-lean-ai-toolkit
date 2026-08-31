@@ -17,16 +17,16 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 
-// Nur ClaimExtractorRegressionIT kennt ExtractorCase - CheckerCase taucht
-// hier nirgends auf.
+// Only ClaimExtractorRegressionIT knows ExtractorCase - CheckerCase does
+// not appear here at all.
 public class ClaimExtractorRegressionIT extends AbstractRegressionIT {
 
     private static ClaimExtractor claimExtractor;
 
     @BeforeClass
     public static void setUpClass() {
-        // buildExtractorChatModel(): echtes Ollama-Modell mit Produktions-Config
-        // (numCtx=8192, siehe CLAUDE.md) - Aufbau hier aus Übersichtlichkeit ausgelassen.
+        // buildExtractorChatModel(): real Ollama model with production config
+        // (numCtx=8192, see CLAUDE.md) - construction omitted here for clarity.
         claimExtractor = AiServices.create(ClaimExtractor.class, buildExtractorChatModel());
     }
 
@@ -59,11 +59,11 @@ public class ClaimExtractorRegressionIT extends AbstractRegressionIT {
         String joined = String.join(" | ", claims);
 
         for (String mustContain : testCase.mustContainSubstrings()) {
-            assertTrue(testCase.name() + ": erwarteter Substring fehlt: \"" + mustContain + "\"",
+            assertTrue(testCase.name() + ": expected substring missing: \"" + mustContain + "\"",
                     joined.contains(mustContain));
         }
         for (String mustNotContain : testCase.mustNotContainSubstrings()) {
-            assertFalse(testCase.name() + ": unerwarteter Substring vorhanden: \"" + mustNotContain + "\"",
+            assertFalse(testCase.name() + ": unexpected substring present: \"" + mustNotContain + "\"",
                     joined.contains(mustNotContain));
         }
     }

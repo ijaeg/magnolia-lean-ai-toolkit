@@ -8,13 +8,13 @@ import java.util.function.Function;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Generische Basis für die Regressions-Testklassen (JUnit 4, wie der Rest
- * des Moduls). Kennt weder {@link ExtractorCase} noch {@link CheckerCase} –
- * nur ihre Subklassen wissen, welchen konkreten Falltyp sie durchlaufen.
+ * Generic base for the regression test classes (JUnit 4, like the rest
+ * of the module). Knows neither {@link ExtractorCase} nor {@link CheckerCase} –
+ * only their subclasses know which concrete case type they iterate over.
  */
 abstract class AbstractRegressionIT {
 
-    /** Sammelt alle Fehlschläge statt beim ersten abzubrechen. */
+    /** Collects all failures instead of aborting on the first one. */
     protected <T> void runAllAndAssert(List<T> cases, Consumer<T> singleCaseCheck,
                                        Function<T, String> caseNameFn) {
         List<String> failures = new ArrayList<>();
@@ -25,7 +25,7 @@ abstract class AbstractRegressionIT {
                 failures.add(caseNameFn.apply(testCase) + ": " + e.getMessage());
             }
         }
-        assertTrue(failures.size() + " von " + cases.size() + " Fällen fehlgeschlagen:\n"
+        assertTrue(failures.size() + " of " + cases.size() + " cases failed:\n"
                         + String.join("\n", failures),
                 failures.isEmpty());
     }

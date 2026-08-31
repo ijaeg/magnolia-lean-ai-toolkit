@@ -7,9 +7,9 @@ import info.ijaeg.mgnl.ai.tool.WikipediaTool;
 import java.util.Map;
 
 /**
- * Fake für {@link WikipediaTool} mit identischer {@code @Tool}/{@code @P}-
- * Signatur - Beschreibungstext 1:1 aus dem echten Tool übernommen, da er in
- * den Prompt einfließt (siehe {@code WikipediaTool.wikipediaLookup}).
+ * Fake for {@link WikipediaTool} with an identical {@code @Tool}/{@code @P}
+ * signature - description text taken 1:1 from the real tool, since it flows
+ * into the prompt (see {@code WikipediaTool.wikipediaLookup}).
  */
 class FakeWikipediaTool {
 
@@ -34,8 +34,8 @@ class FakeWikipediaTool {
             @P("Disambiguating context, e.g. 'Vung Tau Vietnam colonial villa' — pass an empty string only if the name is already unambiguous") String context,
             @P("ISO-639-1 language code, e.g. en, de") String language) {
 
-        // Fuzzy statt exaktem Key-Vergleich: das Modell sucht ggf. mit leicht
-        // abweichendem Begriff (z. B. "Jonas Vetter Bundespräsident").
+        // Fuzzy instead of exact key comparison: the model may search with a
+        // slightly different term (e.g. "Jonas Vetter Bundespräsident").
         return fixtures.entrySet().stream()
                 .filter(e -> query.contains(e.getKey()))
                 .map(Map.Entry::getValue)

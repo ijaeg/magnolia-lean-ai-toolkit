@@ -15,18 +15,18 @@ import java.util.List;
 import java.util.stream.Stream;
 
 /**
- * Lädt {@link ExtractorCase}- und {@link CheckerCase}-Regressionsfälle aus
- * JSON-Dateien im Klassenpfad – je Testfall genau eine Datei, alle Dateien
- * eines Falltyps gemeinsam in einem Verzeichnis, z. B.:
+ * Loads {@link ExtractorCase} and {@link CheckerCase} regression cases from
+ * JSON files on the classpath – exactly one file per test case, all files
+ * of one case type together in one directory, e.g.:
  *
  * <pre>
- * src/test/resources/.../regression/extractor-cases/thematically-foreign-fact-in-marketing-copy.json
- * src/test/resources/.../regression/extractor-cases/self-referential-we-framing.json
- * src/test/resources/.../regression/checker-cases/false-title-checked-against-real-occupation.json
+ * src/test/resources/regression-testdata/extractor-cases/thematically-foreign-fact-in-marketing-copy.json
+ * src/test/resources/regression-testdata/extractor-cases/self-referential-we-framing.json
+ * src/test/resources/regression-testdata/checker-cases/false-title-checked-against-real-occupation.json
  * ...
  * </pre>
  *
- * Aufruf:
+ * Usage:
  * <pre>
  * List&lt;ExtractorCase&gt; cases = RegressionCaseLoader.loadExtractorCases(
  *         "/.../regression/extractor-cases");
@@ -34,24 +34,24 @@ import java.util.stream.Stream;
  *         "/.../regression/checker-cases");
  * </pre>
  *
- * <p><b>Wichtig für Records + Jackson:</b> Maven-Compiler-Plugin mit
- * {@code <parameters>true</parameters>} übersetzen, damit Jackson die
- * Record-Komponentennamen (name, text, languageCode, ...) automatisch den
- * JSON-Feldern zuordnen kann.</p>
+ * <p><b>Important for Records + Jackson:</b> compile with the Maven
+ * compiler plugin's {@code <parameters>true</parameters>}, so Jackson can
+ * automatically map the record component names (name, text, languageCode, ...)
+ * to the JSON fields.</p>
  *
- * <p><b>Klassenpfad-Annahme:</b> die Verzeichnis-Auflistung per
- * {@code Files.list} setzt voraus, dass die Testressourcen als normale
- * Dateien vorliegen (Standardfall bei {@code mvn test}/{@code mvn verify},
- * da Surefire/Failsafe direkt gegen {@code target/test-classes} laufen,
- * nicht gegen ein gepacktes JAR). Falls die Regressionstests jemals aus
- * einem JAR heraus laufen sollten, bräuchte es stattdessen eine
- * Manifest-Datei mit der Liste der Dateinamen statt der Verzeichnis-Auflistung.</p>
+ * <p><b>Classpath assumption:</b> the directory listing via
+ * {@code Files.list} assumes the test resources exist as plain files (the
+ * standard case for {@code mvn test}/{@code mvn verify}, since
+ * Surefire/Failsafe run directly against {@code target/test-classes}, not
+ * against a packaged JAR). If the regression tests should ever run from a
+ * JAR, this would instead need a manifest file listing the filenames
+ * instead of the directory listing.</p>
  */
 final class RegressionCaseLoader {
 
     private static final ObjectMapper MAPPER = new ObjectMapper()
-            // Tippfehler/veraltete Felder im JSON sollen beim Laden hart auffallen,
-            // nicht erst als stiller Default im Test-Assert.
+            // Typos/stale fields in the JSON should fail loudly on load,
+            // not silently default in the test assertion.
             .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, true)
             .configure(DeserializationFeature.FAIL_ON_NULL_FOR_PRIMITIVES, true);
 
@@ -70,7 +70,7 @@ final class RegressionCaseLoader {
         URL dirUrl = RegressionCaseLoader.class.getResource(classpathDirectory);
         if (dirUrl == null) {
             throw new IllegalArgumentException(
-                    "Regression-Testdaten-Verzeichnis nicht gefunden: " + classpathDirectory);
+                    "Regression test data directory not found: " + classpathDirectory);
         }
 
         Path dirPath;
@@ -78,23 +78,23 @@ final class RegressionCaseLoader {
             dirPath = Paths.get(dirUrl.toURI());
         } catch (URISyntaxException e) {
             throw new IllegalStateException(
-                    "Ungültige Klassenpfad-URI für Verzeichnis " + classpathDirectory, e);
+                    "Invalid classpath URI for directory " + classpathDirectory, e);
         }
 
         List<Path> jsonFiles;
         try (Stream<Path> files = Files.list(dirPath)) {
             jsonFiles = files
                     .filter(p -> p.toString().endsWith(".json"))
-                    .sorted() // deterministische Reihenfolge unabhängig vom Dateisystem
+                    .sorted() // deterministic order independent of the filesystem
                     .toList();
         } catch (IOException e) {
             throw new UncheckedIOException(
-                    "Fehler beim Auflisten der Regression-Testdaten in " + classpathDirectory, e);
+                    "Error listing the regression test data in " + classpathDirectory, e);
         }
 
         if (jsonFiles.isEmpty()) {
             throw new IllegalStateException(
-                    "Keine JSON-Dateien in " + classpathDirectory + " gefunden");
+                    "No JSON files found in " + classpathDirectory);
         }
 
         List<T> cases = new ArrayList<>(jsonFiles.size());
@@ -108,7 +108,7 @@ final class RegressionCaseLoader {
         try {
             return MAPPER.readValue(file.toFile(), type);
         } catch (IOException e) {
-            throw new UncheckedIOException("Fehler beim Parsen von " + file, e);
+            throw new UncheckedIOException("Error parsing " + file, e);
         }
     }
 }

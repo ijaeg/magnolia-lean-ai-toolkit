@@ -3,10 +3,10 @@ package info.ijaeg.mgnl.ai.regression;
 import java.util.List;
 
 /**
- * Ein Regressionsfall für {@code ClaimExtractor}. Eigenständige Top-Level-
- * Klasse statt in {@link AbstractRegressionIT} verschachtelt, weil nur
- * {@link ClaimExtractorRegressionIT} und {@link RegressionCaseLoader} sie
- * kennen müssen – die generische Basisklasse braucht keinen Bezug dazu.
+ * A regression case for {@code ClaimExtractor}. Standalone top-level
+ * class instead of nested in {@link AbstractRegressionIT}, because only
+ * {@link ClaimExtractorRegressionIT} and {@link RegressionCaseLoader} need
+ * to know it – the generic base class needs no reference to it.
  */
 public record ExtractorCase(String name, String text, String languageCode,
                      List<String> mustContainSubstrings,

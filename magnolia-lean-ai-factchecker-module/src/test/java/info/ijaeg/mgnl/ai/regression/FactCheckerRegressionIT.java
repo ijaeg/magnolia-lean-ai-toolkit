@@ -17,19 +17,19 @@ import static org.mockito.Mockito.mock;
 public class FactCheckerRegressionIT extends AbstractRegressionIT {
 
     /**
-     * Baut den ChatModel für den FactChecker exakt über {@link ChatModelFactory}
-     * (dieselbe Fabrik/derselbe Weg wie {@code FactCheckerServiceImpl}).
-     * Config-Werte aus {@code config.yaml} (factCheckerChatModelConfg +
-     * includes/ollamaChatModelConfig.yaml) übernommen: kein
-     * {@code supportedCapabilities}-Override, bleibt leer wie im Original -
-     * siehe CLAUDE.md, warum RESPONSE_FORMAT_JSON_SCHEMA hier bewusst NICHT
-     * gesetzt wird (bricht Tool-Calling in Kombination mit Schema-Zwang).
+     * Builds the ChatModel for the FactChecker exactly via {@link ChatModelFactory}
+     * (same factory/same path as {@code FactCheckerServiceImpl}).
+     * Config values taken from {@code config.yaml} (factCheckerChatModelConfg +
+     * includes/ollamaChatModelConfig.yaml): no
+     * {@code supportedCapabilities} override, stays empty as in the original -
+     * see CLAUDE.md for why RESPONSE_FORMAT_JSON_SCHEMA is deliberately NOT
+     * set here (breaks tool-calling in combination with schema enforcement).
      *
-     * <p>Bewusst kein Caching über {@code @BeforeClass}: pro Testfall wird
-     * ohnehin ein neuer {@code FactChecker} mit eigenem
-     * {@link FakeWikipediaTool} gebaut (siehe {@link #checkSingleCase}),
-     * das Neu-Erzeugen des ChatModel selbst kostet dabei nichts
-     * Nennenswertes gegenüber dem eigentlichen Ollama-Aufruf.</p>
+     * <p>Deliberately no caching via {@code @BeforeClass}: a new
+     * {@code FactChecker} with its own
+     * {@link FakeWikipediaTool} is built per test case anyway (see
+     * {@link #checkSingleCase}), so re-creating the ChatModel itself costs
+     * nothing noteworthy compared to the actual Ollama call.</p>
      */
     private static ChatModel buildCheckerChatModel() {
         ChatModelFactory chatModelFactory = new ChatModelFactory(mock(PasswordRegistry.class));
@@ -62,7 +62,7 @@ public class FactCheckerRegressionIT extends AbstractRegressionIT {
 
         FactChecker.FactCheckResult result = factChecker.check(testCase.claim(), testCase.languageCode());
 
-        assertEquals(testCase.name() + ": erwartetes Verdict stimmt nicht",
+        assertEquals(testCase.name() + ": expected verdict does not match",
                 testCase.expectedVerdict(), result.verdict());
     }
 }

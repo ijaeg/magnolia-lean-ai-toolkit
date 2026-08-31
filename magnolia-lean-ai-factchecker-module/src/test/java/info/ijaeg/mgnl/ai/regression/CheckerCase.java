@@ -6,10 +6,10 @@ import info.ijaeg.mgnl.ai.tool.WikipediaTool;
 import java.util.Map;
 
 /**
- * Ein Regressionsfall für {@code FactChecker}. Eigenständige Top-Level-
- * Klasse aus demselben Grund wie {@link ExtractorCase}: nur
- * {@link FactCheckerRegressionIT} und {@link RegressionCaseLoader} greifen
- * darauf zu, {@link AbstractRegressionIT} bleibt davon unabhängig.
+ * A regression case for {@code FactChecker}. Standalone top-level
+ * class for the same reason as {@link ExtractorCase}: only
+ * {@link FactCheckerRegressionIT} and {@link RegressionCaseLoader} access it,
+ * {@link AbstractRegressionIT} stays independent of it.
  */
 public record CheckerCase(String name, String claim, String languageCode,
                    Map<String, WikipediaTool.WikipediaResult> wikipediaFixtures,
