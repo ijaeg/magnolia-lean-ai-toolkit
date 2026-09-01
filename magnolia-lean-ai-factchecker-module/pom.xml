@@ -4,7 +4,7 @@
   <parent>
     <artifactId>magnolia-lean-ai-toolkit</artifactId>
     <groupId>info.ijaeg.mgnl.ai</groupId>
-    <version>1.0-SNAPSHOT</version>
+    <version>${leanAiToolkitVersion}</version>
   </parent>
   <artifactId>magnolia-lean-ai-factchecker-module</artifactId>
   <packaging>jar</packaging>
