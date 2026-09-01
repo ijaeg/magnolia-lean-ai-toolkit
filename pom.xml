@@ -3,10 +3,9 @@
   <groupId>info.ijaeg.mgnl.ai</groupId>
   <artifactId>magnolia-lean-ai-toolkit</artifactId>
   <name>magnolia-lean-ai-toolkit (parent pom)</name>
-  <version>${leanAiToolkitVersion}</version>
+  <version>0.1.0</version>
   <packaging>pom</packaging>
   <properties>
-    <leanAiToolkitVersion>0.1.0</leanAiToolkitVersion>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <magnoliaBundleVersion>6.4.9</magnoliaBundleVersion>
     <javaVersion>21</javaVersion>

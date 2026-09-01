@@ -4,11 +4,11 @@
   <parent>
     <groupId>info.ijaeg.mgnl.ai</groupId>
     <artifactId>magnolia-lean-ai-toolkit</artifactId>
-    <version>${leanAiToolkitVersion}</version>
+    <version>0.1.0</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
   <artifactId>magnolia-lean-ai-toolkit-webapp</artifactId>
-  <version>${leanAiToolkitVersion}</version>
+  <version>0.1.0</version>
   <name>magnolia-lean-ai-toolkit: webapp</name>
   <packaging>war</packaging>
   <dependencies>
