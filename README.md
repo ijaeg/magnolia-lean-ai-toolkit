@@ -14,7 +14,7 @@ The toolkit is organized as a growing collection of independent, single-purpose 
 
 ## FactChecker
 
-An editor selects a piece of content (e.g apage or a component) in the Magnolia Pages App or any other content app, triggers a **"Fact Check"** action, and gets a message-center notification listing every factual claim found on the page, together with a verdict (`CORRECT` / `INCORRECT` / `UNVERIFIABLE`), an explanation, and a source link — without leaving Magnolia or copy-pasting content into an external tool.
+An editor selects a piece of content (e.g. a page or a component) in the Magnolia Pages App or any other content app, triggers a **"Fact Check"** action, and gets a message-center notification listing every factual claim found on the page, together with a verdict (`CORRECT` / `INCORRECT` / `UNVERIFIABLE`), an explanation, and a source link — without leaving Magnolia or copy-pasting content into an external tool.
 
 ### Why
 
@@ -118,4 +118,6 @@ Full list of configuration properties, defaults, and gotchas: [`magnolia-lean-ai
 
 ## License
 
-[GNU General Public License v3.0](LICENSE.md)
+This project's own source code is licensed under the [Apache License, Version 2.0](LICENSE.md).
+
+It is built against and requires [Magnolia CMS Community Edition](https://www.magnolia-cms.com/), which is separately licensed by Magnolia International Ltd. under the GNU General Public License v3.0. Magnolia CE is not bundled in this repository — it is resolved as a Maven dependency (WAR overlay) at build time and must be obtained separately; see [Requirements](#requirements).
