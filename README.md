@@ -14,7 +14,7 @@ The toolkit is organized as a growing collection of independent, single-purpose 
 
 ## FactChecker
 
-An editor selects a piece of content (e.g page or component) in the Magnolia Pages App or any other content app, triggers a **"Fact Check"** action, and gets a message-center notification listing every factual claim found on the page, together with a verdict (`CORRECT` / `INCORRECT` / `UNVERIFIABLE`), an explanation, and a source link — without leaving Magnolia or copy-pasting content into an external tool.
+An editor selects a piece of content (e.g apage or a component) in the Magnolia Pages App or any other content app, triggers a **"Fact Check"** action, and gets a message-center notification listing every factual claim found on the page, together with a verdict (`CORRECT` / `INCORRECT` / `UNVERIFIABLE`), an explanation, and a source link — without leaving Magnolia or copy-pasting content into an external tool.
 
 ### Why
 
