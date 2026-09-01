@@ -59,7 +59,9 @@ public class FactCheckerServiceImpl implements FactCheckerService {
                 .chatModel(chatModelFactory.createChatModel(getModule().getFactCheckerChatModelConfg()))
                 .tools(new WikipediaTool(restClientRegistry, restClientFactory))
                 .build();
+        log.info("Fact-checking content ({} chars, language={})", text.length(), language);
         List<String> claims = extractClaims(text, language);
+        log.info("Extracted {} claim(s)", claims.size());
         claims.forEach(claim -> {
             FactChecker.FactCheckResult result = null;
             try {
@@ -68,13 +70,14 @@ public class FactCheckerServiceImpl implements FactCheckerService {
                 try {
                     result = factChecker.check(claim, language);
                 } catch (OutputParsingException e1) {
-                    log.warn(e1.getMessage());
+                    log.warn("Fact-check failed twice for claim, dropping it: \"{}\"", claim, e1);
                 }
             }
             if (result != null) {
                 claimCheckResultList.add(new FactChecker.ClaimCheckResult(claim, result.verdict(), result.explanation(), result.sourceUrl()));
             }
         });
+        log.info("Fact-check complete: {}/{} claim(s) checked", claimCheckResultList.size(), claims.size());
         return claimCheckResultList;
     }
 

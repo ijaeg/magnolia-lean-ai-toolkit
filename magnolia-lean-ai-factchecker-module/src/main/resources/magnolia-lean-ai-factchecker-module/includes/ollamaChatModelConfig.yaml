@@ -1,6 +1,10 @@
 providerType: OLLAMA
 baseUrl: "http://localhost:11434"
 numPredict: 1024
-logRequests: true
-logResponses: true
 timeoutInSeconds: 150
+# Enable only for local debugging - logs full prompt/response content
+# (may include unpublished page content) and, depending on the LangChain4j
+# version, potentially unmasked request headers. Never enable in an
+# environment with real editorial content or a cloud-provider API key.
+logRequests: false
+logResponses: false

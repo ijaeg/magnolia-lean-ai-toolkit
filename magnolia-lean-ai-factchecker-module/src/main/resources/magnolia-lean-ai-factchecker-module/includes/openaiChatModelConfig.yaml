@@ -2,6 +2,10 @@ providerType: OPEN_AI
 # Use Magnolia Passowrds App to store OpenAI API Key and add node path here
 apiKey: "/magnolia-lean-ai-toolkit/openai_api_key"
 modelName: "gpt-5.6-terra"
-logRequests: true
-logResponses: true
 timeoutInSeconds: 150
+# Enable only for local debugging - logs full prompt/response content
+# (may include unpublished page content) and, depending on the LangChain4j
+# version, potentially unmasked request headers. Never enable in an
+# environment with real editorial content or a cloud-provider API key.
+logRequests: false
+logResponses: false

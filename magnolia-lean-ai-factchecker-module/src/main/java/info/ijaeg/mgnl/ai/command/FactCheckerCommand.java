@@ -81,7 +81,7 @@ public class FactCheckerCommand extends BaseRepositoryCommand {
                                 propertyValue = property.getString();
                             }
                         } catch (RepositoryException e) {
-                            log.warn(e.getMessage());
+                            log.warn("Failed to read '{}' for locale {} on {}", nodePropertyName, locale, node, e);
                         }
                     }
                     if (StringUtils.isNotEmpty(propertyValue)) {

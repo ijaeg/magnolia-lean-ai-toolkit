@@ -50,6 +50,7 @@ public class FactCheckCommandAction extends JcrCommandAction<Node, FactCheckComm
     protected boolean executeCommand(Node node) throws Exception {
         boolean returnValue = super.executeCommand(node);
         List<FactChecker.ClaimCheckResult> results = MgnlContext.getAttribute(FACTCHECK_RESULTS_ATTR);
+        log.debug("Sending fact-check message with {} result(s) for {}", results.size(), node);
         MessagesManager messagesManager = Components.getComponent(MessagesManager.class);
         Message msg = new Message();
         msg.setSubject(getDefinition().getMessageSubject());

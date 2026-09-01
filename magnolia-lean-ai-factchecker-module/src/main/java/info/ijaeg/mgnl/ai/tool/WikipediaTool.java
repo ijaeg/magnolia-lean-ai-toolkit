@@ -111,15 +111,11 @@ public class WikipediaTool {
                             : Jsoup.parse(page.get("excerpt").asText()).text();
                     hits.add(new SearchHit(key, title, description));
                 } catch (Exception e) {
-                    log.error(e.getMessage(), e);
-                    log.info("query: " + query);
-                    log.info("response: " + jsonString);
+                    logLookupFailure("query=" + query, jsonString, e);
                 }
             }
         } catch (Exception e) {
-            log.error(e.getMessage(), e);
-            log.info("query: " + query);
-            log.info("response: " + jsonString);
+            logLookupFailure("query=" + query, jsonString, e);
         }
         return hits;
     }
@@ -156,9 +152,7 @@ public class WikipediaTool {
             JsonNode jsonNode = objectMapper.readTree(jsonString);
             return jsonNode.get("extract").textValue();
         } catch (Exception e) {
-            log.error(e.getMessage(), e);
-            log.info("key: " + key);
-            log.info("response: " + jsonString);
+            logLookupFailure("key=" + key, jsonString, e);
             return StringUtils.EMPTY;
         }
     }
@@ -191,6 +185,11 @@ public class WikipediaTool {
         if (response.getStatus() != HttpStatus.SC_OK || !response.getMediaType().isCompatible(MediaType.APPLICATION_JSON_TYPE)) {
             throw new IllegalStateException(MessageFormat.format("Unexpected response - status code: {0}, content type: {1}", response.getStatus(), response.getMediaType()));
         }
+    }
+
+    private void logLookupFailure(String context, String jsonString, Exception e) {
+        log.error("Wikipedia lookup failed: {}", context, e);
+        log.debug("Raw response: {}", jsonString);
     }
 
     public record SearchHit(String key, String title, String description) {
