@@ -7,6 +7,13 @@ import lombok.Setter;
 
 import static info.ijaeg.mgnl.ai.command.FactCheckerCommand.COMMAND_NAME;
 
+/**
+ * Definition for the {@code factCheckCommandAction} ({@code $type:
+ * factCheckCommandAction}) — the "Fact Check" action wired into an app's
+ * actionbar. For a description of each property below and how they're used,
+ * see {@code config.md} (kept there, not duplicated here, to avoid the two
+ * drifting apart).
+ */
 @ActionType("factCheckCommandAction")
 @Getter
 @Setter
@@ -17,7 +24,7 @@ public class FactCheckCommandActionDefinition extends JcrCommandActionDefinition
     private String messageDescriptionNoClaims;
     private String messageDescriptionPattern;
 
-    public  FactCheckCommandActionDefinition() {
+    public FactCheckCommandActionDefinition() {
         setImplementationClass(FactCheckCommandAction.class);
         setIcon(" icon-preview-app");
         setCommand(COMMAND_NAME);

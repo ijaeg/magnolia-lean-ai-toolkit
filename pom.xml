@@ -12,6 +12,7 @@
     <lombokVersion>1.18.46</lombokVersion>
     <langchain4jVersion>1.18.1</langchain4jVersion>
     <jakartaWsRsApiVersion>4.0.0</jakartaWsRsApiVersion>
+    <mockitoVersion>5.14.2</mockitoVersion>
   </properties>
   <!-- Fill the following in, so you can use the release plugin -->
   <scm>
@@ -64,6 +65,12 @@
         <artifactId>lombok</artifactId>
         <version>${lombokVersion}</version>
         <scope>compile</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.mockito</groupId>
+        <artifactId>mockito-core</artifactId>
+        <version>${mockitoVersion}</version>
+        <scope>test</scope>
       </dependency>
     </dependencies>
   </dependencyManagement>

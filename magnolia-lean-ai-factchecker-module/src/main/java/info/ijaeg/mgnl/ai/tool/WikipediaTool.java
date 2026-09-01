@@ -27,6 +27,18 @@ import java.util.Map;
 
 import static java.util.stream.Collectors.joining;
 
+/**
+ * LangChain4j {@code @Tool} used by {@link info.ijaeg.mgnl.ai.agent.FactChecker}
+ * to look up a named entity on Wikipedia. Search strategy and disambiguation
+ * logic were shaped by extensive trial and error against real (occasionally
+ * adversarial) content — see {@code CLAUDE.md} for the reasoning behind the
+ * "bare query first" search order, the {@code %20} vs {@code +} URL-encoding
+ * fix, the required, policy-compliant {@code User-Agent} header (configured
+ * per REST client, not in this class), and {@link #isClearlyBestMatch}'s
+ * disambiguation heuristic. Returns a typed {@link WikipediaResult} rather
+ * than throwing on anything short of a clear match, so the calling model can
+ * fall back to {@code UNVERIFIABLE} instead of being handed a guess.
+ */
 @Slf4j
 public class WikipediaTool {
     public static final String REST_CLIENT_BASE_NAME = "wikipedia";
@@ -44,15 +56,15 @@ public class WikipediaTool {
     }
 
     @Tool("""
-    Searches Wikipedia for a named entity in the given language and returns its summary. Only pass
-    non-empty context when the entity name by itself is genuinely generic or
-    reused across many places (e.g. "White Palace", "Old Town", "National
-    Museum"). Well-known, specific proper nouns (city names, named rivers,
-    named landmarks) should be looked up WITHOUT context — do not combine two
-    proper nouns from the claim into one search request.
-    If no sufficiently matching article can be found, this returns a
-    NOT_FOUND marker instead of guessing.
-    """)
+            Searches Wikipedia for a named entity in the given language and returns its summary. Only pass
+            non-empty context when the entity name by itself is genuinely generic or
+            reused across many places (e.g. "White Palace", "Old Town", "National
+            Museum"). Well-known, specific proper nouns (city names, named rivers,
+            named landmarks) should be looked up WITHOUT context — do not combine two
+            proper nouns from the claim into one search request.
+            If no sufficiently matching article can be found, this returns a
+            NOT_FOUND marker instead of guessing.
+            """)
     WikipediaResult wikipediaLookup(
             @P("The entity or claim subject to look up, e.g. 'White Palace'") String query,
             @P("Disambiguating context, e.g. 'Vung Tau Vietnam colonial villa' — pass an empty string only if the name is already unambiguous") String context,
@@ -161,6 +173,20 @@ public class WikipediaTool {
         }
     }
 
+    /**
+     * Guards against treating a non-JSON response body as JSON. Wikimedia's
+     * edge/CDN occasionally returns an HTTP error or a plain-text block page
+     * instead of the expected JSON API response (e.g. under rate limiting or
+     * a rejected {@code User-Agent}) — without this check, that body would
+     * otherwise reach {@code objectMapper.readTree(...)} and fail with a
+     * confusing {@code JsonParseException} pointing at RESTEasy's own error
+     * text rather than the real cause. See {@code CLAUDE.md}.
+     *
+     * @throws IllegalStateException if the response is not a {@code 200} with
+     *                               an {@code application/json} content type; caught by the callers
+     *                               of this method, which then degrade to an empty result rather
+     *                               than propagating the failure
+     */
     private void verifyResponse(Response response) {
         if (response.getStatus() != HttpStatus.SC_OK || !response.getMediaType().isCompatible(MediaType.APPLICATION_JSON_TYPE)) {
             throw new IllegalStateException(MessageFormat.format("Unexpected response - status code: {0}, content type: {1}", response.getStatus(), response.getMediaType()));
@@ -169,19 +195,53 @@ public class WikipediaTool {
 
     public record SearchHit(String key, String title, String description) {
         String pageUrl(String language) {
-            return MessageFormat.format( "https://{0}.wikipedia.org/wiki/{1}", language, key);
+            return MessageFormat.format("https://{0}.wikipedia.org/wiki/{1}", language, key);
         }
     }
 
+    /**
+     * Result of a {@link #wikipediaLookup} call, returned to the calling
+     * model instead of a raw exception so it can decide how to proceed
+     * (typically: fall back to {@code UNVERIFIABLE} on anything but {@link
+     * Status#FOUND}).
+     *
+     * @param status    whether a confident match was found
+     * @param title     matched article title ({@link Status#FOUND}), the
+     *                  original query ({@link Status#NOT_FOUND}), or {@code
+     *                  null} ({@link Status#AMBIGUOUS})
+     * @param extract   article summary ({@link Status#FOUND}), or a
+     *                  human-readable explanation of why no result could be
+     *                  returned (otherwise)
+     * @param sourceUrl Wikipedia article URL, or {@code null} if there is
+     *                  none to point to
+     */
     public record WikipediaResult(Status status, String title, String extract, String sourceUrl) {
-        public enum Status { FOUND, NOT_FOUND, AMBIGUOUS }
+        /**
+         * Outcome of a single {@link #wikipediaLookup} call.
+         */
+        public enum Status {
+            /**
+             * Exactly one confident match was found; {@code extract} is its summary.
+             */
+            FOUND,
+            /**
+             * No search results at all for the given query.
+             */
+            NOT_FOUND,
+            /**
+             * Multiple candidates were found and none is clearly the best match.
+             */
+            AMBIGUOUS
+        }
 
         static WikipediaResult found(String title, String extract, String url) {
             return new WikipediaResult(Status.FOUND, title, extract, url);
         }
+
         static WikipediaResult notFound(String query) {
             return new WikipediaResult(Status.NOT_FOUND, query, null, null);
         }
+
         static WikipediaResult ambiguous(String query, List<SearchHit> hits) {
             String candidates = hits.stream().map(SearchHit::title).collect(joining(", "));
             return new WikipediaResult(Status.AMBIGUOUS, null,

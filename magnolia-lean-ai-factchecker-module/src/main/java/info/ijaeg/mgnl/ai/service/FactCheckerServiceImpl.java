@@ -2,13 +2,13 @@ package info.ijaeg.mgnl.ai.service;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import dev.langchain4j.service.AiServices;
 import dev.langchain4j.service.output.OutputParsingException;
+import info.ijaeg.mgnl.ai.FactCheckerModule;
 import info.ijaeg.mgnl.ai.agent.ClaimExtractor;
 import info.ijaeg.mgnl.ai.agent.FactChecker;
 import info.ijaeg.mgnl.ai.factory.ChatModelFactory;
 import info.ijaeg.mgnl.ai.tool.WikipediaTool;
-import dev.langchain4j.service.AiServices;
-import info.ijaeg.mgnl.ai.FactCheckerModule;
 import info.magnolia.module.ModuleRegistry;
 import info.magnolia.rest.client.factory.RestClientFactory;
 import info.magnolia.rest.client.registry.RestClientRegistry;
@@ -18,6 +18,13 @@ import org.jsoup.Jsoup;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Default {@link FactCheckerService} implementation. Wires the two LangChain4j
+ * agents ({@link ClaimExtractor}, {@link FactChecker}) with independently
+ * configured chat models (see {@code config.md} for the two {@code
+ * ChatModelConfig} properties on {@link FactCheckerModule}) and the
+ * {@link WikipediaTool}.
+ */
 @Singleton
 @Slf4j
 public class FactCheckerServiceImpl implements FactCheckerService {
@@ -34,6 +41,17 @@ public class FactCheckerServiceImpl implements FactCheckerService {
         this.chatModelFactory = chatModelFactory;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * <p>Each claim is checked independently. If the fact-checking model
+     * returns a response {@code FactChecker} cannot parse ({@link
+     * OutputParsingException} — typically an incomplete/truncated JSON
+     * response, a known local-model failure mode, see {@code CLAUDE.md}),
+     * the check is retried once for that claim. If the retry also fails,
+     * that single claim is dropped from the result instead of failing the
+     * whole request — the already-checked claims are still returned.</p>
+     */
     @Override
     public List<FactChecker.ClaimCheckResult> check(String text, String language) {
         List<FactChecker.ClaimCheckResult> claimCheckResultList = new ArrayList<>();

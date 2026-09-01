@@ -4,9 +4,9 @@ import com.google.inject.Inject;
 import info.ijaeg.mgnl.ai.agent.FactChecker;
 import info.ijaeg.mgnl.ai.service.FactCheckerService;
 import info.magnolia.cms.i18n.I18nContentSupport;
-import info.magnolia.context.MgnlContext;
 import info.magnolia.commands.impl.BaseRepositoryCommand;
 import info.magnolia.context.Context;
+import info.magnolia.context.MgnlContext;
 import info.magnolia.jcr.predicate.AbstractPredicate;
 import info.magnolia.jcr.util.NodeTypes;
 import info.magnolia.jcr.util.NodeUtil;
@@ -20,7 +20,9 @@ import lombok.extern.slf4j.Slf4j;
 import javax.jcr.Node;
 import javax.jcr.Property;
 import javax.jcr.RepositoryException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 @Slf4j
 public class FactCheckerCommand extends BaseRepositoryCommand {
@@ -57,7 +59,7 @@ public class FactCheckerCommand extends BaseRepositoryCommand {
         I18nContentSupport i18n = getI18n(node);
         doExecute(node, results, i18n);
         if (includeSubnodes) {
-            Iterator<Node> subnodes  = NodeUtil.collectAllChildren(node, new PageSubnodesPredicate(node)).iterator();
+            Iterator<Node> subnodes = NodeUtil.collectAllChildren(node, new PageSubnodesPredicate(node)).iterator();
             while (subnodes.hasNext()) {
                 Node subnode = subnodes.next();
                 doExecute(subnode, results, i18n);

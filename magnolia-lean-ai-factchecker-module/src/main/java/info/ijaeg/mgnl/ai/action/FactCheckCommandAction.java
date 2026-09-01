@@ -26,6 +26,17 @@ import java.util.List;
 
 import static info.ijaeg.mgnl.ai.command.FactCheckerCommand.FACTCHECK_RESULTS_ATTR;
 
+/**
+ * Runs after the {@code factChecker} command completes: reads the results
+ * {@link info.ijaeg.mgnl.ai.command.FactCheckerCommand} stashed in {@code
+ * MgnlContext} (see {@code FACTCHECK_RESULTS_ATTR}), formats them via the
+ * {@link FactCheckCommandActionDefinition}'s message properties (see {@code
+ * config.md}), and sends the result to the editor's message center.
+ * {@code explanation} — the only LLM-generated text interpolated into the
+ * HTML message pattern — is HTML-escaped before interpolation; the other
+ * placeholders are not, since they're either controlled values or plain
+ * identifiers.
+ */
 @Slf4j
 public class FactCheckCommandAction extends JcrCommandAction<Node, FactCheckCommandActionDefinition> {
     public static final String MSG_PROP_DESCRIPTION = "description";
@@ -50,7 +61,7 @@ public class FactCheckCommandAction extends JcrCommandAction<Node, FactCheckComm
         return returnValue;
     }
 
-    private String getMessage(Node node) throws RepositoryException{
+    private String getMessage(Node node) throws RepositoryException {
         return MessageFormat.format(getDefinition().getMessagePattern(), node.getSession().getWorkspace().getName(), node.getPath());
     }
 
@@ -60,7 +71,7 @@ public class FactCheckCommandAction extends JcrCommandAction<Node, FactCheckComm
         }
         StringBuilder sb = new StringBuilder();
         results.forEach(result -> {
-           sb.append(MessageFormat.format(definition.getMessageDescriptionPattern(), result.claim(), result.verdict(), StringEscapeUtils.escapeHtml4(result.explanation()), getSourceUrlLink(result.sourceUrl())));
+            sb.append(MessageFormat.format(definition.getMessageDescriptionPattern(), result.claim(), result.verdict(), StringEscapeUtils.escapeHtml4(result.explanation()), getSourceUrlLink(result.sourceUrl())));
         });
         return sb.toString();
     }

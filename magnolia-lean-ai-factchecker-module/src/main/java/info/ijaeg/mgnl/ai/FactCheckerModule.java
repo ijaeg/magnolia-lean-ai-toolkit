@@ -5,8 +5,6 @@ import dev.langchain4j.model.chat.Capability;
 import info.magnolia.module.ModuleLifecycle;
 import lombok.Data;
 
-import java.util.List;
-
 /**
  * This class is optional and represents the configuration for the lean-ai-assistant-module module.
  * By exposing simple getter/setter/adder methods, this bean can be configured via content2bean
